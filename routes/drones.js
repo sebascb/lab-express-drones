@@ -19,12 +19,20 @@ router.use(express.json())
 
 router.get('/drones/create', (req, res, next) => {
   // Iteration #3: Add a new drone
-  // ... your code here
+  res.render('drones/create-form')
 });
 
-router.post('/drones/create', (req, res, next) => {
+router.post('/drones/create', async (req, res, next) => {
   // Iteration #3: Add a new drone
-  // ... your code here
+  try{
+    const {name, propellers, maxSpeed} = req.body
+    const createDrone = await Drone.create({ name, propellers, maxSpeed })
+    all = await Drone.find()
+    res.render("drones/list", {all})
+  }
+  catch(err){
+    res.render("drones/create-form")
+  }
 });
 
 router.get('/drones/:id/edit', (req, res, next) => {
